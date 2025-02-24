@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Vortex } from "@/components/ui/vortex";
 import { TypewriterEffectSmooth } from "@/components/ui/typewriter-effect";
 import { motion } from "framer-motion";
@@ -10,7 +10,11 @@ export default function Page() {
   const [clickCount, setClickCount] = useState(0);
   const [showConfetti, setShowConfetti] = useState(false);
   const { width, height } = useWindowSize();
-  const audioRef = useRef(new Audio("https://www.myinstants.com/media/sounds/abhi-maza-ayagga.mp3"));
+  const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    audioRef.current = new Audio("https://www.myinstants.com/media/sounds/abhi-maza-ayagga.mp3");
+  }, []);
 
   const handleSurprise = () => {
     setClickCount((prev) => prev + 1);
@@ -19,19 +23,21 @@ export default function Page() {
     switch (currentClick % 4) {
       case 1:
         setShowConfetti(true);
-        setTimeout(() => setShowConfetti(false), 2000);
+        setTimeout(() => setShowConfetti(false), 4000);
         break;
       case 2:
-        audioRef.current.play();
+        audioRef.current?.play();
         break;
       case 3:
-        audioRef.current.pause();
-        audioRef.current.currentTime = 0;
+        audioRef.current?.pause();
+        if (audioRef.current) {
+          audioRef.current.currentTime = 0;
+        }
         setShowConfetti(true);
-        setTimeout(() => setShowConfetti(false), 2000);
+        setTimeout(() => setShowConfetti(false), 4000);
         break;
       case 0:
-        audioRef.current.play();
+        audioRef.current?.play();
         break;
       default:
         break;
