@@ -38,7 +38,7 @@ export default function Page() {
       setBgColor(`bg-[hsl(${Math.random() * 360}, 100%, 80%)]`);
     } else if (selectedSurprise.includes("Confetti")) {
       setShowConfetti(true);
-      setTimeout(() => setShowConfetti(false), 3000);
+      setTimeout(() => setShowConfetti(false), 100);
     } else if (selectedSurprise.includes("Playing a funny sound")) {
       playSound();
     }
